@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Transaksi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -22,7 +25,11 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {
-        return redirect()->route('obat.index');
+    {   
+        $transaksi= DB::table('transaksis')
+                        ->select('id', 'tanggal', 'total')
+                        ->where('pembeli_id', '=', Auth::user()->id)
+                        ->get();
+        return view('home', compact('transaksi'));
     }
 }

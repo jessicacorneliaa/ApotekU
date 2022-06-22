@@ -47,9 +47,9 @@ class TransaksiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Transaksi $transaksi)
     {
-        //
+        return view('laporan.show', compact('transaksi'));
     }
 
     /**
@@ -87,30 +87,42 @@ class TransaksiController extends Controller
     }
 
     public function laporanPembeliTerbanyak(){
-//         select p.id, p.name, p.address, p.telepon
-// from transaksi_obats as tob 
-// inner join transaksis as t on tob.transaksi_id = t.id
-// inner join pembelis as p on t.pembeli_id = p.id
-// GROUP BY t.pembeli_id;
-        $laporans= DB::table('transaksi_obats as tob')
-                    ->select('p.id', 'p.name', 'p.address', 'p.telepon')
-                    ->join('transaksis as t', 'tob.transaksi_id', "=", 't.id')
-                    ->join('pembelis as p', 't.pembeli_id', "=", 'p.id')
+        // Menghitung jumlah total semua transaksi tiap pembeli
+        // select p.user_id, p.name, p.address, p.telepon, sum(t.total) as totalHarga
+        // from transaksis t
+        // INNER JOIN pembelis p on p.user_id=t.pembeli_id
+        // GROUP by t.pembeli_id
+        // ORDER BY totalHarga ASC 
+        // LIMIT 3;
+        
+        $laporans= DB::table('transaksis as t')
+                    ->select('p.user_id', 'p.name', 'p.address', 'p.telepon', DB::raw('SUM(t.total) as totalHarga'))
+                    ->join('pembelis as p', 't.pembeli_id', "=", 'p.user_id')   
+                    ->groupBy('p.user_id')     
+                    ->orderBy('totalHarga', 'DESC')                          
+                    ->limit(3)
                     ->get();
         return view('laporan.pembeliTransaksiTerbanyak', compact('laporans'));
     }
 
     public function laporanObatTerlaris(){
+        //Ambil semua data di masternya -> obat dan transaksi
         $obat = Obat::all();
         $transaksi = Transaksi::all();
 
         $arr_terlaris = [];
 
+        //Masukkan data master obat dan transaksi pada 1 array
+        //Foreach berdasarkan obat karena obat yang utama(dominan)
+        //Beri key pada array dengan id obat, valuenya jumlah obat tsb terjual
         foreach($obat as $o) $arr_terlaris[$o->id] = $o->transaksi()->sum('jumlah');
 
+        //Sort isi array berdasarkan valuenya secara desc
         arsort($arr_terlaris);
+        //Ambil key 5 data dari array yang sudah diurutkan, nantinya digunakan untuk menampilkan data by id(key) tsb
         $terlaris = array_slice(array_keys($arr_terlaris), 0,5, true);
 
+        //Masukkan daftar obat yang sesuai dengan key pada array $terlaris tadi ke sebuah array
         $obat_terlaris = [];
         foreach($terlaris as $idx => $val){
             $obat = Obat::find($val);

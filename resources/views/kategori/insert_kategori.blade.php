@@ -11,7 +11,7 @@
 <div class="portlet">
     <div class="portlet-title">
         <div class="caption">
-            <i class="fa fa-reorder"></i> Isikan data obat
+            <i class="fa fa-reorder"></i> Isikan data kategori obat
         </div>
         <div class="tools">
             <a href="" class="collapse"></a>

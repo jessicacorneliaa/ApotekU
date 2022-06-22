@@ -40,6 +40,9 @@ License: You must have a valid license purchased only from themeforest(the above
 <link href="{{asset('assets/css/custom.css')}}" rel="stylesheet" type="text/css"/>
 <!-- END THEME STYLES -->
 <link rel="shortcut icon" href="favicon.ico"/>
+
+<!-- ICONS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 </head>
 @yield('javascript')
 <!-- END HEAD -->
@@ -51,7 +54,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <div class="header-inner">
         <!-- BEGIN LOGO -->
 	<div class="page-logo">
-            <a href="index.html">
+            <a href="{{ route('obat.index') }}">
                 <img src="{{asset('assets/img/logo.png')}}" alt="logo"/>
             </a>
         </div>
@@ -115,6 +118,10 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- BEGIN SIDEBAR -->
 <div class="page-sidebar-wrapper">
 	<div class="page-sidebar navbar-collapse collapse">
+        @php
+            $route = Route::current();
+            $route = $route->uri();
+        @endphp
 		<!-- BEGIN SIDEBAR MENU -->
 		<ul class="page-sidebar-menu">
 			<li class="sidebar-toggler-wrapper">
@@ -140,19 +147,25 @@ License: You must have a valid license purchased only from themeforest(the above
 				</a>
 			</li>
           
-            <li class="start ">
+            <li <?php echo ($route == 'kategori') ? "class='active'" : "class='start'"; ?>>
 				<a href="{{ url('kategori') }}">
 				<i class="fa fa-bookmark"></i>
 				<span class="title">Kategori</span>
 				</a>
 			</li>
-            <li class="start ">
+            <li <?php echo ($route == 'obat') ? "class='active'" : "class='start'"; ?>>
 				<a href="{{ url('obat') }}">
 				<i class="fa fa-glass"></i>
 				<span class="title">Obat</span>
 				</a>
 			</li>
-            <li class="active ">
+            <li <?php echo ($route == 'pembeli') ? "class='active'" : "class='start'"; ?>>
+				<a href="{{ url('pembeli') }}">
+				<i class="fa fa-glass"></i>
+				<span class="title">Pembeli</span>
+				</a>
+			</li>
+            <li <?php echo ($route == 'pembeli-dengan-transaksi-terbanyak' || $route == 'obat-terlaris') ? "class='active'" : "class='start'"; ?>>
                 <a href="javascript:;">
                 <i class="icon-calendar"></i>
                 <span class="title">Laporan</span>
@@ -160,10 +173,10 @@ License: You must have a valid license purchased only from themeforest(the above
                 <span class="arrow open"></span>
                 </a>
                 <ul class="sub-menu">
-                    <li class="active">
-                        <a href="#">Obat Terlaris</a>
+                    <li <?php echo ($route == 'obat-terlaris') ? "class='active'" : "class='start'"; ?>>
+                        <a href="{{url('obat-terlaris')}}">Obat Terlaris</a>
                     </li>
-                    <li class="active">
+                    <li <?php echo ($route == 'pembeli-dengan-transaksi-terbanyak') ? "class='active'" : "class='start'"; ?> >
                         <a href="{{url('pembeli-dengan-transaksi-terbanyak')}}">Pembeli dengan transaksi terbanyak</a>
                     </li>
                 </ul>

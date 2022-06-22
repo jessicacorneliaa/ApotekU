@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\ObatController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -15,22 +16,35 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'ObatController@front_index')->name('index');
+Route::get('/daftar-obat', 'ObatController@front_obat')->name('daftarobat');
 
-// obat
-Route::resource('obat','ObatController');
 
-// kategori :))
-Route::resource('kategori','KategoriController');
+Route::middleware(['auth'])->group(function(){
 
-// Transaksi
-Route::resource('transaksi', 'TransaksiController');
-Route::get('pembeli-dengan-transaksi-terbanyak', 'TransaksiController@laporanPembeliTerbanyak');
+    // cart
+    Route::get('add-to-cart/{id}', 'ObatController@addToCart');
+    Route::get('checkout', 'ObatController@checkout');
+    Route::get('submit-checkout', 'ObatController@submitCheckout');
 
-Route::get('obat-terlaris', 'TransaksiController@laporanObatTerlaris');
+    // obat
+    Route::resource('obat','ObatController');
+
+    // pembeli
+    Route::resource('pembeli','PembeliController');
+
+    // kategori 
+    Route::resource('kategori','KategoriController');
+
+    // Transaksi
+    Route::resource('transaksi', 'TransaksiController');
+    Route::get('pembeli-dengan-transaksi-terbanyak', 'TransaksiController@laporanPembeliTerbanyak');
+
+    Route::get('obat-terlaris', 'TransaksiController@laporanObatTerlaris');
+});

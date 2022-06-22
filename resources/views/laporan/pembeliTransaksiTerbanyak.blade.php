@@ -16,7 +16,7 @@
     <div class="row">
     <div class="col-12">
         <div class="card">
-            <table class="table">
+            <table class="table table-bordere">
                 <thead>
                     <tr>
                         <th>ID Pembeli</th>
@@ -29,11 +29,11 @@
                 <tbody>
                     @foreach($laporans as $laporan)
                     <tr>
-                        <td>{{$laporan->id}}</td>
-                        <td>{{$laporan->nama}}</td>
-                        <td>{{$laporan->alamat}}</td>
+                        <td>{{$laporan->user_id}}</td>
+                        <td>{{$laporan->name}}</td>
+                        <td>{{$laporan->address}}</td>
                         <td>{{$laporan->telepon}}</td>
-                        <td>{{number_format($laporan->total)}}</td>
+                        <td>Rp {{ number_format($laporan-> totalHarga)}}</td>
                     </tr>
                     @endforeach
                 </tbody>

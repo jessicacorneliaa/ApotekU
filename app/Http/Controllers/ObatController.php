@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Obat;
 use App\Kategori;
+use App\Transaksi;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class ObatController extends Controller
 {
@@ -142,4 +145,55 @@ class ObatController extends Controller
         $obat->delete();
         return redirect()->route('obat.index')->with('status', 'Data berhasil dihapus');
     }
+
+    public function front_index(){
+        $products= Obat::all();
+        return view('frontend.product', compact('products'));
+    }
+
+    public function front_obat(){
+        $products= Obat::all();
+        return view('frontend.obat', compact('products'));
+    }
+
+    public function addToCart($id){
+        $products= Obat::find($id);
+        $cart= session()->get('cart');
+        if(!isset($cart[$id])){
+            $cart[$id]= [
+                "name"=> $products->generic_name . "(". $products->form . ")",
+                "quantity"=> 1,
+                "price"=> $products->price,
+                "image"=> $products->image
+            ];
+        }
+        else{
+            $cart[$id]['quantity']++;
+        }
+        session()->put('cart', $cart); 
+        return redirect()->back()->with('success', 'Product '.$cart[$id]['name'].' added to cart successfully, with quantity is '.$cart[$id]['quantity']);
+  }
+
+  public function checkout(){
+      return view('frontend.checkout');
+  }
+
+  public function submitCheckout(){
+    // $this->authorize('check-member');
+    $cart= session()->get('cart');
+
+    $user= Auth::user();
+    $transaksi= new Transaksi;
+    $transaksi->pembeli_id= Auth::user()->id;
+    $transaksi->tanggal= Carbon::now()->toDateTimeString();
+    $transaksi->save();
+
+    $totalHarga= $transaksi->insertProduct($cart, $user);
+    $transaksi-> total= $totalHarga;
+    $transaksi->save();
+
+    session()->forget('cart');
+    return redirect('home');
+}
+
 }

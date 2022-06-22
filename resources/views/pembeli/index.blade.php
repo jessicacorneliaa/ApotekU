@@ -1,6 +1,6 @@
 @extends('layout.conquer')
 @section('content')
-<h2>List Obat</h2> 
+<h2>Daftar Pembeli</h2> 
 <div>
   @if(session('status'))
   <div class="alert alert-success">{{session('status')}}</div>
@@ -29,12 +29,12 @@
   <table class="table table-hover">
 
     <thead>
-        <a href="{{ route('kategori.create') }}" class="btn btn-primary" >Tambah</a>
       <tr>
         <th>ID</th>
         <th>Nama Pembeli</th>
         <th>Alamat Pembeli</th>
         <th>No tlp</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
@@ -45,13 +45,14 @@
             <td>{{ $d -> name}}</td>
             <td>{{ $d -> address}}</td>
             <td>{{ $d -> telepon}}</td>
-            <td> <a href = "{{ route('pembeli.edit',$d ->id)}}" 
-                  class = 'btn btn-xs btn-info'>edit</a>
-
-                  <form method="POST" action="{{ route('pembeli.destroy', $d->id) }}">
+            <td> <a href = "{{ route('pembeli.edit',$d ->user_id)}}" 
+                  class = 'btn btn-s btn-info'><span class="bi bi-pencil-square"></span></a>
+            </td>
+            <td>
+                  <form method="POST" action="{{ route('pembeli.destroy', $d->user_id) }}">
                     @csrf
                     @method('DELETE')
-                    <input type="submit" class="btn btn-danger btn-xs" value="delete" onclick="if(!confirm('are you sure to delete this record ?')) return false;">
+                    <button type="submit" class="btn btn-danger btn-s" onclick="if(!confirm('are you sure to delete this record ?')) return false;"><span class="bi bi-trash"></span></button>
                   </form>
             </td>
         </tr>

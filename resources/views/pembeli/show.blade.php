@@ -12,19 +12,21 @@
 <body>
 
 <div class="container">
-  <h2>Detail Kategori</h2>  
+  <h2>Detail Pembeli</h2>  
   @if($message)         
   <table class="table table-hover">
     <thead>
       <tr>
         <th>Nama</th>
-        <th>Description</th>
+        <th>Alamat</th>
+        <th>No Tlp</th>
       </tr>
     </thead>
     <tbody>
         <tr> 
-            <td>{{ $message -> nama}}</td>
-            <td>{{ $message -> deskripsi}}</td>
+            <td>{{ $message -> name}}</td>
+            <td>{{ $message -> address}}</td>
+            <td>{{ $message -> telepon}}</td>
         </tr>
     </tbody>
   </table>

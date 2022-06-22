@@ -25,7 +25,8 @@ class PembeliController extends Controller
      */
     public function create()
     {
-        
+        $result = Pembeli::get();
+        return view ('pembeli.insert_pembeli',compact('result'));
     }
 
     /**
@@ -36,7 +37,13 @@ class PembeliController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = new Pembeli();
+        $data->name = $request->get('nama');
+        $data->address = $request->get('alamat');
+        $data->telepon = $request->get('telepon');
+
+        $data->save();
+        return redirect()->route('pembeli.index')-> with('status','Data baru berhasil tersimpan');
     }
 
     /**
@@ -45,9 +52,19 @@ class PembeliController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($pembeli)
     {
-        //
+        $res = Pembeli::find($pembeli);
+        if($res){
+            // apabila data ditemukan
+            $message = $res;
+        }
+        else{
+            // apabila data tidak ditemukan
+            $message = Null;
+        }
+        
+        return view("pembeli.show", compact('message'));
     }
 
     /**
@@ -56,9 +73,16 @@ class PembeliController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($user_id)
     {
-        //
+        //dd($user_id);
+        // $data = Pembeli::find($user_id);
+        // return view ('pembeli.edit',compact('data'));
+
+        $data = DB::table('pembelis')
+                ->where('user_id', $user_id)
+                ->get();
+        return view ('pembeli.edit',compact('data'));
     }
 
     /**
@@ -68,9 +92,21 @@ class PembeliController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $user_id)
     {
-        //
+        $nama = $request->get('nama');
+        $alamat = $request->get('alamat');
+        $telepon  = $request->get('telepon');
+
+        DB::table('pembelis')
+            ->where('user_id', $user_id)
+            ->update([
+                'name' => $nama,
+                'address' => $alamat,
+                'telepon' => $telepon,
+            ]);
+
+        return redirect()->route('pembeli.index')->with('status', 'Data berhasil diubah');
     }
 
     /**
@@ -79,8 +115,12 @@ class PembeliController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($user_id)
     {
-        //
+        DB::table('pembelis')
+        ->where('user_id', $user_id)
+        ->delete();
+
+        return redirect()->route('pembeli.index')->with('status', 'Data berhasil dihapus');
     }
 }

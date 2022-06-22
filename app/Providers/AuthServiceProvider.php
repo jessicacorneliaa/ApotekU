@@ -25,6 +25,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('check-pembeli', function($user){
+            return($user->role== 'pembeli');
+        });
     }
 }

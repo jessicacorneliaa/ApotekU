@@ -1,6 +1,11 @@
 @extends('layout.conquer')
 @section('content')
-<h2>List Obat</h2> 
+
+<style>
+    .center, th {text-align: center;}
+</style>
+
+<h2>Daftar Obat</h2> 
 <div>
   @if(session('status'))
   <div class="alert alert-success">{{session('status')}}</div>
@@ -27,8 +32,8 @@
    </div>
 </div>
   <table class="table table-hover">
+    <a href="{{ route('obat.create') }}" class="btn btn-primary" >+ Tambah</a>
     <thead>
-    <a href="{{ route('obat.create') }}" class="btn btn-primary" >Tambah</a>
       <tr>
         <th>ID</th>
         <th>Nama Obat</th>
@@ -43,17 +48,18 @@
         @foreach($data as $d)
         <tr>
             <td>{{ $no++ }}</td>
-            <td>{{ $d -> nama_obat}}</td>
+            <td>{{ ucfirst($d -> nama_obat)}}</td>
             <td>{{ $d -> restriction_formula}}</td>
             <td>{{ $d -> harga}}</td>
-            <td>{{ $d -> nama_kategori}}</td>
+            <td>{{ ucwords(strtolower($d -> nama_kategori))}}</td>
             <td> <a href = "{{ route('obat.edit',$d ->id)}}" 
-                  class = 'btn btn-xs btn-info'>edit</a>
-
+                  class = 'btn btn-s btn-info'><span class="bi bi-pencil-square"></span></a>
+            </td>
+            <td>
                   <form method="POST" action="{{url('obat/'.$d->id)}}">
                     @csrf
                     @method('DELETE')
-                    <input type="submit" class="btn btn-danger btn-xs" value="delete" onclick="if(!confirm('are you sure to delete this record ?')) return false;">
+                    <button type="submit" class="btn btn-danger btn-s" onclick="if(!confirm('are you sure to delete this record ?')) return false;"><span class="bi bi-trash"></span></button>
                   </form>
             </td>
         </tr>
