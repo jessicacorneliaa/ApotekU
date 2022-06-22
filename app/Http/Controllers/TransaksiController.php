@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Obat;
+use App\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 
 class TransaksiController extends Controller
 {
@@ -98,22 +101,22 @@ class TransaksiController extends Controller
     }
 
     public function laporanObatTerlaris(){
-        //dari transaksi_obats,  group by obat_id
-        //Select o.id, o.generic_name, sum(tr.jumlah)
-        //From obats o
-        //inner join transaksi_obats tr ON o.id = tr.obat_id
-        //where sum(tr.jumlah) = Select MAX(sum(jumlah)) from transaksi_obats group by obat_id
+        $obat = Obat::all();
+        $transaksi = Transaksi::all();
 
-        // Belum dicoba
-        $terlaris = DB::table('transaksi_obats')->max("DB::Raw(sum('jumlah'))")->groupBy('obat_id');
+        $arr_terlaris = [];
 
-        $obat = DB::table('transaksi_obats')
-                ->select('o.id', 'o.generic_name', DB::Raw('sum(tr.jumlah)'))
-                ->join('transaksi_obats tr','o.id', '=', 'tr.obat_id')
-                ->where("DB::Raw('sum(tr.jumlah)')", $terlaris)
-                ->get();
+        foreach($obat as $o) $arr_terlaris[$o->id] = $o->transaksi()->sum('jumlah');
 
-        dd($obat);
-        // return view('laporan.obatTerlaris', compact('obat'));
+        arsort($arr_terlaris);
+        $terlaris = array_slice(array_keys($arr_terlaris), 0,5, true);
+
+        $obat_terlaris = [];
+        foreach($terlaris as $idx => $val){
+            $obat = Obat::find($val);
+            array_push($obat_terlaris, $obat);
+        }
+        // dd($obat_terlaris);
+        return view('laporan.obatTerlaris', compact('obat_terlaris', 'arr_terlaris'));
     }
 }
