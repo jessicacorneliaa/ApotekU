@@ -26,6 +26,7 @@ class HomeController extends Controller
      */
     public function index()
     {   
+        $this->authorize('check-pembeli');
         $transaksi= DB::table('transaksis')
                         ->select('id', 'tanggal', 'total')
                         ->where('pembeli_id', '=', Auth::user()->id)

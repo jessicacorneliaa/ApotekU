@@ -25,7 +25,15 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        Gate::define('check-admin', function($user){
+            return($user->role== 'admin');
+        });
+
         Gate::define('check-pembeli', function($user){
+            return($user->role== 'pembeli');
+        });
+
+        Gate::define('add-cart-permission', function($user){
             return($user->role== 'pembeli');
         });
     }

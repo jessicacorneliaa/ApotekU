@@ -1,6 +1,6 @@
 @extends('layout.medion')
 
-@section('title', 'Products')
+@section('title', 'ApotikU')
 
 @section('content')
 @if(session('success'))
@@ -20,7 +20,6 @@
                 <span>
                   ApotikU
                 </span>
-
               </h2>
             </div>
           </div>
@@ -35,39 +34,42 @@
   </div>
   <!-- end discount section -->
 <div class="health_carousel-container">
-      <h2 class="text-uppercase">
-        Daftar Obat
-      </h2>
-      <div class="carousel-wrap layout_padding2">
-        <div class="owl-carousel owl-2">
-        @foreach($products as $p)
-          <div class="item">
-            <div class="box">
-              <div class="btn_container">
-                <a href="{{url('add-to-cart/'.$p->id)}}">
-                  Add to cart
-                </a>
-              </div>
-              <div class="img-box">
-                <img src="{{asset('images/'.$p->image)}}" height="100px" width="100px">
-              </div>
-              <div class="detail-box">
-                <div class="text">
-                  <h6>
-                    {{$p->generic_name}}
-                  </h6>
-                  <h6 class="price text-align-right">Rp. {{$p->price}}</h6>
-                </div>
-              </div>
+  <h2 class="text-uppercase">
+    Daftar Obat
+  </h2>
+  <div class="carousel-wrap layout_padding2">
+    <div class="owl-carousel owl-2">
+    @foreach($products as $p)
+      <div class="item">
+        <div class="box">
+          <div class="btn_container">
+          @can('add-cart-permission')
+            <a href="{{url('add-to-cart/'.$p->id)}}">
+              Add to cart
+            </a>
+          @endcan
+          </div>
+         
+          <div class="img-box">
+            <img src="{{asset('images/'.$p->image)}}" height="100px" width="100px">
+          </div>
+          <div class="detail-box">
+            <div class="text">
+              <h6>{{$p->generic_name}}</h6>
+            </div>
+            <div class="text">
+              <h6 class="price text-align-right">Rp. {{$p->price}}</h6>
             </div>
           </div>
-        @endforeach
         </div>
       </div>
+    @endforeach
     </div>
-    <div class="d-flex justify-content-center">
-      <a href="{{ route('daftarobat') }}">
-        See more
-      </a>
-    </div>
+  </div>
+</div>
+<div class="d-flex justify-content-center">
+  <a href="{{ route('daftarobat') }}">
+    See more
+  </a>
+</div>
 @endsection

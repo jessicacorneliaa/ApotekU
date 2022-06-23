@@ -45,11 +45,17 @@
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="d-flex flex-lg-row align-items-center w-100 justify-content-xl-end">
-               <div class="login_btn-contanier ml-0 ml-lg-5">
+            <ul class="navbar-nav  ">
+                <li class="nav-item active">
+                  <a class="nav-link" href="{{url('/')}}">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{url('daftar-obat')}}"> Obat </a>
+                </li>
+                @can('add-cart-permission')
+                <li class="nav-item">
                   <div class="dropdown">
-                    <button type="button" class="btn btn-info" data-toggle="dropdown">
-                        <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart <span class="badge badge-pill badge-danger"></span>
-                    </button>
+                    <a class="nav-link" href="#" data-toggle="dropdown"> Cart </a>
                     <div class="dropdown-menu">
                         @if(session('cart'))
                         <?php
@@ -83,9 +89,10 @@
                                 <a href="{{ url('checkout') }}" class="btn btn-danger btn-block">Checkout</a>
                             </div>
                         </div>
-                    </div>
-                </div>
-              </div>
+                  </div>
+                </li>
+                @endcan
+              </ul>
               @if(Auth::user() == null)
               <div class="login_btn-contanier ml-0 ml-lg-5">
                   <a href="{{ route('login') }}">
@@ -102,7 +109,11 @@
                 <div class="dropdown user">
                   <a href="#" data-toggle="dropdown" class="dropdown-toggle" data-toggle="dropdown" data-close-others="true">
                     <span>
+                      @if(auth()->user()->pembeli)
                         {{ auth()->user()->pembeli->name }}
+                      @else(auth()->user()->admin)
+                      {{ auth()->user()->admin->name }}
+                      @endif
                     </span>
                   </a>
                 <div class="dropdown-menu">

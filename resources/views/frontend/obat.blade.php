@@ -55,6 +55,7 @@
                     </tr>
                     <tr>
                         <td>
+                            @can('add-cart-permission')
                             <form action="{{url('add-to-cart/'.$p->id)}}" method="GET">
                                 @csrf
                                 <div class="row">
@@ -64,6 +65,7 @@
                                     </span>
                                 </div>
                             </form>
+                            @endcan
                         </td>
                     </tr>
                 </div>

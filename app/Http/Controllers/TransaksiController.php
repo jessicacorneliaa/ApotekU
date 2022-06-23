@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Obat;
 use App\Transaksi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
@@ -49,7 +50,13 @@ class TransaksiController extends Controller
      */
     public function show(Transaksi $transaksi)
     {
-        return view('laporan.show', compact('transaksi'));
+        if(Auth::user()->pembeli){
+            return view('laporan.show', compact('transaksi'));
+        }
+        else{
+            return view('laporan.showAdmin', compact('transaksi'));
+        }
+        
     }
 
     /**
@@ -130,5 +137,10 @@ class TransaksiController extends Controller
         }
         // dd($obat_terlaris);
         return view('laporan.obatTerlaris', compact('obat_terlaris', 'arr_terlaris'));
+    }
+
+    public function transaksiSemuaPembeli(){
+        $transaksi=Transaksi::all();
+        return view('laporan.transaksiSemuaPembeli', compact('transaksi'));
     }
 }

@@ -40,4 +40,8 @@ class User extends Authenticatable
     public function pembeli(){
         return $this->hasOne('App\Pembeli','user_id','id');
     }
+
+    public function admin(){
+        return $this->hasOne('App\Admin','user_id','id');
+    }
 }

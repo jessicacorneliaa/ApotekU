@@ -28,23 +28,23 @@ Route::get('/daftar-obat', 'ObatController@front_obat')->name('daftarobat');
 
 Route::middleware(['auth'])->group(function(){
 
-    // cart
+    // Cart
     Route::get('add-to-cart/{id}', 'ObatController@addToCart');
     Route::get('checkout', 'ObatController@checkout');
     Route::get('submit-checkout', 'ObatController@submitCheckout');
 
-    // obat
+    // Obat
     Route::resource('obat','ObatController');
 
-    // pembeli
+    // Pembeli
     Route::resource('pembeli','PembeliController');
 
-    // kategori 
+    // Kategori 
     Route::resource('kategori','KategoriController');
 
     // Transaksi
     Route::resource('transaksi', 'TransaksiController');
     Route::get('pembeli-dengan-transaksi-terbanyak', 'TransaksiController@laporanPembeliTerbanyak');
-
     Route::get('obat-terlaris', 'TransaksiController@laporanObatTerlaris');
+    Route::get('transaksi-semua-pembeli', 'TransaksiController@transaksiSemuaPembeli');
 });

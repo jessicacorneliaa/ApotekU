@@ -6,15 +6,18 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <th>Kode</th>
+                <th>No</th>
+                <th>Kode Transaksi</th>
                 <th>Waktu Transaksi</th>
                 <th>Total</th>
                 <th>Detail</th>
             </tr>
         </thead>
         <tbody>
+        @php $no = 1; @endphp
             @foreach($transaksi as $t)
             <tr>
+                <td>{{$no++}}</td>
                 <td>{{$t->id}}</td>
                 <td>{{$t->tanggal}}</td>
                 <td>Rp {{number_format($t->total, 0, ', ','.')}}</td>

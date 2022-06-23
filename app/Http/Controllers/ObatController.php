@@ -149,6 +149,10 @@ class ObatController extends Controller
     public function front_index(){
         $products= Obat::all();
         return view('frontend.product', compact('products'));
+        if($this->authorize('check-admin')){
+            dd("a");
+            return redirect()->route('obat.index');
+        }       
     }
 
     public function front_obat(){

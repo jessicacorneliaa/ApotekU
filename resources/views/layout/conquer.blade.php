@@ -179,6 +179,9 @@ License: You must have a valid license purchased only from themeforest(the above
                     <li <?php echo ($route == 'pembeli-dengan-transaksi-terbanyak') ? "class='active'" : "class='start'"; ?> >
                         <a href="{{url('pembeli-dengan-transaksi-terbanyak')}}">Pembeli dengan transaksi terbanyak</a>
                     </li>
+                    <li <?php echo ($route == 'transaksi-semua-pembeli') ? "class='active'" : "class='start'"; ?> >
+                        <a href="{{url('transaksi-semua-pembeli')}}">Transaksi semua pembeli</a>
+                    </li>
                 </ul>
             </li>
 		</ul>
