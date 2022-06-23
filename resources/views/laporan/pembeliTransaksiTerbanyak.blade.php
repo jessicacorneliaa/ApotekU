@@ -19,6 +19,7 @@
             <table class="table table-bordere">
                 <thead>
                     <tr>
+                        <th>No.</th>
                         <th>ID Pembeli</th>
                         <th>Nama Pembeli</th>
                         <th>Alamat</th>
@@ -27,8 +28,12 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <?php
+                        $no=1;
+                    ?>
                     @foreach($laporans as $laporan)
                     <tr>
+                        <td>{{$no++}}</td>
                         <td>{{$laporan->user_id}}</td>
                         <td>{{$laporan->name}}</td>
                         <td>{{$laporan->address}}</td>

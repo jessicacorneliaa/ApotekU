@@ -15,8 +15,8 @@
         <tr>
             <th style="width:8%" class="text-center">No</th>
             <th style="width:50%">Product</th>
-            <th style="width:10%" class="text-center">Price</th>
-            <th style="width:8%" class="text-center">Quantity</th>
+            <th style="width:12%" class="text-center">Price</th>
+            <th style="width:5%" class="text-center">Quantity</th>
             <th style="width:22%" class="text-center">Subtotal</th>
         </tr>
         </thead>
@@ -28,7 +28,7 @@
         ?>
         @foreach($transaksi->obat as $details)
         <?php
-            $jml+= $details->pivot->harga;
+            $jml+= $details->pivot->jumlah;
             $total+= $details->pivot->jumlah* $details->pivot->harga;
             $no+=1;
         ?>
@@ -42,11 +42,11 @@
                     </div>
                 </div>
             </td>
-            <td data-th="Price" class="text-center">{{$details->price}}</td>
+            <td data-th="Price" class="text-center">Rp {{number_format($details->price,2)}}</td>
             <td data-th="Quantity" class="text-center">
                 {{$details->pivot->jumlah}}
             </td>
-            <td data-th="Subtotal" class="text-center">{{$details->pivot->harga* $details->pivot->jumlah}}</td>
+            <td data-th="Subtotal" class="text-center">Rp {{number_format(($details->pivot->harga* $details->pivot->jumlah),2)}}</td>
         </tr>
         @endforeach
         </tbody>
@@ -54,7 +54,7 @@
         <tr class="visible-xs">
             <td colspan="3" style="text-align:right">Total: </td>
             <td class="text-center"><strong>{{$jml}}</strong></td>
-            <td class="text-center"><strong>{{$total}}</strong></td>
+            <td class="text-center"><strong>Rp {{number_format($total,2)}}</strong></td>
         </tr>
         </tfoot>
     </table>

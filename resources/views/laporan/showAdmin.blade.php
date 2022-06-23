@@ -23,7 +23,7 @@
     ?>
     @foreach($transaksi->obat as $details)
     <?php
-        $jml+= $details->pivot->harga;
+        $jml+= $details->pivot->jumlah;
         $total+= $details->pivot->jumlah* $details->pivot->harga;
         $no+=1;
     ?>
@@ -37,19 +37,19 @@
                 </div>
             </div>
         </td>
-        <td data-th="Price" class="text-center">{{$details->price}}</td>
+        <td data-th="Price" class="text-center">Rp {{number_format($details->price,2)}}</td>
         <td data-th="Quantity" class="text-center">
             {{$details->pivot->jumlah}}
         </td>
-        <td data-th="Subtotal" class="text-center">{{$details->pivot->harga* $details->pivot->jumlah}}</td>
+        <td data-th="Subtotal" class="text-center">Rp {{number_format($details->pivot->harga* $details->pivot->jumlah,2)}}</td>
     </tr>
     @endforeach
     </tbody>
     <tfoot>
-    <tr class="visible-xs">
+    <tr>
         <td colspan="3" style="text-align:right">Total: </td>
         <td class="text-center"><strong>{{$jml}}</strong></td>
-        <td class="text-center"><strong>{{$total}}</strong></td>
+        <td class="text-center"><strong>Rp {{number_format($total,2)}}</strong></td>
     </tr>
     </tfoot>
 </table>

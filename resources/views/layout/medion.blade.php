@@ -14,7 +14,7 @@
 
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-  <title>@yield('title')</title>
+  <title>ApoteKu</title>
 
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -34,7 +34,7 @@
           <a class="navbar-brand" href="{{ route('index') }}">
             <img src="" alt="">
             <span>
-              ApotikU
+            ApoteKu
             </span>
           </img>
           </a>
@@ -45,42 +45,67 @@
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="d-flex flex-lg-row align-items-center w-100 justify-content-xl-end">
-            <ul class="navbar-nav  ">
+            <ul class="navbar-nav ">
                 <li class="nav-item active">
                   <a class="nav-link" href="{{url('/')}}">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{{url('daftar-obat')}}"> Obat </a>
+                  @if(auth()->user()!=null)
+                    @if(auth()->user()->admin)
+                      <a class="nav-link" href="{{url('obat')}}"> Obat </a>  
+                    @else
+                      <a class="nav-link" href="{{url('daftar-obat')}}"> Obat </a>  
+                    @endif
+                  @else
+                    <a class="nav-link" href="{{url('daftar-obat')}}"> Obat </a>  
+                  @endif
                 </li>
                 @can('add-cart-permission')
+                <li class="nav-item active">
+                  <a class="nav-link" href="{{url('/home')}}">Riwayat <span class="sr-only">(current)</span></a>
+                </li>
                 <li class="nav-item">
                   <div class="dropdown">
-                    <a class="nav-link" href="#" data-toggle="dropdown"> Cart </a>
+                    @if(session('cart'))
+                      <?php
+                          $jml= 0;
+                          $total= 0;
+                      ?>
+                      @foreach(session('cart') as $id=>$details)
+                        <?php
+                          $jml+= $details['quantity'];
+                          $total+= $details['quantity']* $details['price'];
+                        ?>
+                      @endforeach
+                      <a class="nav-link" href="#" data-toggle="dropdown"> Cart <span class="badge badge-pill badge-danger">{{$jml}}</span></a>
+                    @else
+                    <a class="nav-link" href="#" data-toggle="dropdown"> Cart <span class="badge badge-pill badge-danger">0</span></a>
+                    @endif
                     <div class="dropdown-menu">
                         @if(session('cart'))
-                        <?php
-                            $jml= 0;
-                            $total= 0;
-                        ?>
-                        @foreach(session('cart') as $id=>$details)
-                        <?php
-                            $jml+= $details['quantity'];
-                            $total+= $details['quantity']* $details['price'];
-                        ?>
-                        <div class="row cart-detail">
-                            <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
-                                <img src="{{ asset('images/'.$details['image']) }}">
-                            </div>
-                            <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
-                                <p>{{$details['name']}}</p>
-                                <span class="price text-info"> Rp {{$details['price']}}</span> <span class="count"> Qty: {{$details['quantity']}}</span>
-                            </div>
-                        </div>
+                          <?php
+                              $jml= 0;
+                              $total= 0;
+                          ?>
+                          @foreach(session('cart') as $id=>$details)
+                            <?php
+                                $jml+= $details['quantity'];
+                                $total+= $details['quantity']* $details['price'];
+                            ?>
+                          <div class="row cart-detail">
+                              <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
+                                  <img src="{{ asset('images/'.$details['image']) }}">
+                              </div>
+                              <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
+                                  <p>{{$details['name']}}</p>
+                                  <span class="price text-info"> Rp {{number_format($details['price'],2)}}</span> <span class="count"> Qty: {{$details['quantity']}}</span>
+                              </div>
+                          </div>
                         @endforeach
                       
                         <div class="row total-header-section">
                             <div class="col-lg-6 col-sm-6 col-6 total-section">
-                                <p>Total: <span class="text-info">{{number_format($total, 0, ', ','.')}}</span></p>
+                                <p>Total: <span class="text-info">{{number_format($total, 2)}}</span></p>
                             </div>
                         </div>
                         @endif
@@ -89,10 +114,12 @@
                                 <a href="{{ url('checkout') }}" class="btn btn-danger btn-block">Checkout</a>
                             </div>
                         </div>
+                    </div>
                   </div>
                 </li>
                 @endcan
-              </ul>
+            </ul>
+             
               @if(Auth::user() == null)
               <div class="login_btn-contanier ml-0 ml-lg-5">
                   <a href="{{ route('login') }}">
@@ -106,7 +133,7 @@
               </div>
               @else
               <div class="login_btn-contanier ml-0 ml-lg-5">
-                <div class="dropdown user">
+                <div class="dropdown">
                   <a href="#" data-toggle="dropdown" class="dropdown-toggle" data-toggle="dropdown" data-close-others="true">
                     <span>
                       @if(auth()->user()->pembeli)

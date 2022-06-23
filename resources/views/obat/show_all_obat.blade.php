@@ -4,7 +4,7 @@
   <table class="table table-hover">
     <thead>
       <tr>
-        <th>ID</th>
+        <th>No.</th>
         <th>Gambar</th>
         <th>Nama Obat</th>
         <th>Harga</th>
@@ -17,7 +17,7 @@
             <td>{{ $d -> id}}</td>
             <td>{{ $d -> gambar}}</td>
             <td>{{ $d -> nama_obat}}</td>
-            <td>{{ $d -> harga}}</td>
+            <td>{{ number_format($d -> harga,2)}}</td>
             <td>{{ $d -> nama_kategori}}</td>
         </tr>
         @endforeach

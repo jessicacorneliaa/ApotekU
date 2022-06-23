@@ -35,7 +35,8 @@
     <thead>
         <a href="{{ route('kategori.create') }}" class="btn btn-primary" >+ Tambah</a>
       <tr>
-        <th>ID</th>
+        <th>No</th>
+        <th>ID Kategori</th>
         <th>Nama Kategori</th>
         <th>Deskripsi</th>
         <th>Action</th>
@@ -46,6 +47,7 @@
         @foreach($kategoridata as $d)
         <tr>
             <td>{{$no++}}</td>
+            <td>{{ ucwords(strtolower($d -> id))}}</td>
             <td>{{ ucwords(strtolower($d -> nama))}}</td>
             <td>{{ $d -> deskripsi}}</td>
             <td> <a href = "{{ route('kategori.edit',$d ->id)}}" 

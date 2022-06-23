@@ -30,7 +30,8 @@
 
     <thead>
       <tr>
-        <th>ID</th>
+        <th>No</th>
+        <th>ID Pembeli</th>
         <th>Nama Pembeli</th>
         <th>Alamat Pembeli</th>
         <th>No tlp</th>
@@ -42,6 +43,7 @@
         @foreach($data as $d)
         <tr>
             <td>{{$no++}}</td>
+            <td>{{ $d -> user_id }}</td>
             <td>{{ $d -> name}}</td>
             <td>{{ $d -> address}}</td>
             <td>{{ $d -> telepon}}</td>

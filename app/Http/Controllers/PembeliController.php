@@ -14,6 +14,7 @@ class PembeliController extends Controller
      */
     public function index()
     {
+        $this->authorize('check-admin');
         $data = DB::table('pembelis')->get();
         return view('pembeli.index', compact("data"));
     }
@@ -54,6 +55,7 @@ class PembeliController extends Controller
      */
     public function show($pembeli)
     {
+        $this->authorize('check-admin');
         $res = Pembeli::find($pembeli);
         if($res){
             // apabila data ditemukan
@@ -79,6 +81,7 @@ class PembeliController extends Controller
         // $data = Pembeli::find($user_id);
         // return view ('pembeli.edit',compact('data'));
 
+        $this->authorize('check-admin');
         $data = DB::table('pembelis')
                 ->where('user_id', $user_id)
                 ->get();

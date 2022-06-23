@@ -18,7 +18,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- BEGIN HEAD -->
 	<head>
 <meta charset="utf-8"/>
-<title>Toko Obat</title>
+<title>ApoteKu</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="" name="description"/>
@@ -38,6 +38,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <link href="{{asset('assets/css/plugins.css')}}" rel="stylesheet" type="text/css"/>
 <link href="{{asset('assets/css/themes/default.css')}}" rel="stylesheet" type="text/css" id="style_color"/>
 <link href="{{asset('assets/css/custom.css')}}" rel="stylesheet" type="text/css"/>
+<link href="{{ asset('css/style.css')}}" rel="stylesheet" />
 <!-- END THEME STYLES -->
 <link rel="shortcut icon" href="favicon.ico"/>
 
@@ -54,8 +55,11 @@ License: You must have a valid license purchased only from themeforest(the above
     <div class="header-inner">
         <!-- BEGIN LOGO -->
 	<div class="page-logo">
-            <a href="{{ route('obat.index') }}">
-                <img src="{{asset('assets/img/logo.png')}}" alt="logo"/>
+            <!-- <a href="{{ route('obat.index') }}"> -->
+            <a class="navbar-brand" href="{{ route('obat.index') }}">
+                <img src="" alt="">
+                    <span>ApoteKu</span>
+                </img>
             </a>
         </div>
         <form class="search-form search-form-header" role="form" action="index.html">
@@ -76,31 +80,16 @@ License: You must have a valid license purchased only from themeforest(the above
             <li class="dropdown user">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                 <img alt="" src="assets/img/avatar3_small.jpg"/>
-                <span class="username">
-                Nick </span>
+                <span class="username">{{ auth()->user()->admin->name }}</span>
                 <i class="fa fa-angle-down"></i>
                 </a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="extra_profile.html"><i class="fa fa-user"></i> My Profile</a>
-                    </li>
-                    <li>
-                        <a href="page_calendar.html"><i class="fa fa-calendar"></i> My Calendar</a>
-                    </li>
-                    <li>
-                        <a href="page_inbox.html"><i class="fa fa-envelope"></i> My Inbox <span class="badge badge-danger">
-                        3 </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-tasks"></i> My Tasks <span class="badge badge-success">
-                        7 </span>
-                        </a>
-                    </li>
-                    <li class="divider">
-                    </li>
-                    <li>
-                        <a href="login.html"><i class="fa fa-key"></i> Log Out</a>
+                        <form action="{{ route('logout') }}" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-danger btn-block">Logout</button>
+                        </form>
+                        
                     </li>
                 </ul>
             </li>
@@ -155,19 +144,19 @@ License: You must have a valid license purchased only from themeforest(the above
 			</li>
             <li <?php echo ($route == 'obat') ? "class='active'" : "class='start'"; ?>>
 				<a href="{{ url('obat') }}">
-				<i class="fa fa-glass"></i>
+				<i class="bi bi-bandaid"></i>
 				<span class="title">Obat</span>
 				</a>
 			</li>
             <li <?php echo ($route == 'pembeli') ? "class='active'" : "class='start'"; ?>>
 				<a href="{{ url('pembeli') }}">
-				<i class="fa fa-glass"></i>
+				<i class="bi bi-person"></i>
 				<span class="title">Pembeli</span>
 				</a>
 			</li>
             <li <?php echo ($route == 'pembeli-dengan-transaksi-terbanyak' || $route == 'obat-terlaris') ? "class='active'" : "class='start'"; ?>>
                 <a href="javascript:;">
-                <i class="icon-calendar"></i>
+                <i class="bi bi-file-earmark-medical-fill"></i>
                 <span class="title">Laporan</span>
                 <span class="selected"></span>
                 <span class="arrow open"></span>

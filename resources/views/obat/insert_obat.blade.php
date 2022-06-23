@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="portlet-body form">
-        <form method="POST" action="{{route('obat.store')}}">
+        <form enctype="multipart/form-data" method="POST" action="{{route('obat.store')}}">
             @csrf
             <div class="form-body">
                 <div class="form-group">
@@ -61,6 +61,10 @@
                         @endforeach
                        
                     </select>
+                </div>
+                <div class="form-group">
+                    <label >Photo</label>
+                    <input type="file" class="form-control" id="photo" name="photo">
                 </div>
             </div>
             <div class="form-actions">

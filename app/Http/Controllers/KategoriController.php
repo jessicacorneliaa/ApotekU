@@ -14,6 +14,7 @@ class KategoriController extends Controller
      */
     public function index()
     {
+        $this->authorize('check-admin');
         $kategoridata = DB::table('kategoris')->get();
 
         return view('kategori.index', compact("kategoridata"));
@@ -52,6 +53,7 @@ class KategoriController extends Controller
      */
     public function show($kategori)
     {
+        $this->authorize('check-admin');
         $res = Kategori::find($kategori);
         if($res){
             // apabila data ditemukan
@@ -73,6 +75,7 @@ class KategoriController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('check-admin');
         $data = Kategori::find($id);
         return view ('kategori.edit',compact('data'));
     }

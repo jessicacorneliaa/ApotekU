@@ -18,7 +18,7 @@
               <h2>
                 Welcome to<br>
                 <span>
-                  ApotikU
+                  ApotekU
                 </span>
               </h2>
             </div>
@@ -33,7 +33,7 @@
     </section>
   </div>
   <!-- end discount section -->
-<div class="health_carousel-container">
+<div class="health_carousel-container"><br>
   <h2 class="text-uppercase">
     Daftar Obat
   </h2>
@@ -58,7 +58,7 @@
               <h6>{{$p->generic_name}}</h6>
             </div>
             <div class="text">
-              <h6 class="price text-align-right">Rp. {{$p->price}}</h6>
+              <h6 class="price text-align-right">Rp. {{number_format($p->price,2)}}</h6>
             </div>
           </div>
         </div>

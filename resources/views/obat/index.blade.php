@@ -7,8 +7,10 @@
 
 <h2>Daftar Obat</h2> 
 <div>
-  @if(session('status'))
+  @if(session('status')=="Data berhasil dihapus")
   <div class="alert alert-success">{{session('status')}}</div>
+  @elseif((session('status')=="Data tidak dapat dihapus"))
+  <div class="alert alert-danger">{{session('status')}}</div>
   @endif
 
   @if(session('error'))
@@ -35,7 +37,8 @@
     <a href="{{ route('obat.create') }}" class="btn btn-primary" >+ Tambah</a>
     <thead>
       <tr>
-        <th>ID</th>
+        <th>No.</th>
+        <th>ID Obat</th>
         <th>Nama Obat</th>
         <th>Medicines Form</th>
         <th>Harga</th>
@@ -48,9 +51,10 @@
         @foreach($data as $d)
         <tr>
             <td>{{ $no++ }}</td>
+            <td>{{$d->id}}</td>
             <td>{{ ucfirst($d -> nama_obat)}}</td>
             <td>{{ $d -> restriction_formula}}</td>
-            <td>{{ $d -> harga}}</td>
+            <td>Rp {{ number_format($d -> harga,2)}}</td>
             <td>{{ ucwords(strtolower($d -> nama_kategori))}}</td>
             <td> <a href = "{{ route('obat.edit',$d ->id)}}" 
                   class = 'btn btn-s btn-info'><span class="bi bi-pencil-square"></span></a>

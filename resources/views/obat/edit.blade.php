@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="portlet-body form">
-        <form method="POST" action="{{url('obat/'.$data->id)}}">
+        <form enctype="multipart/form-data" method="POST" action="{{url('obat/'.$data->id)}}">
             @csrf
             @method('PUT')
             <div class="form-body">
@@ -63,8 +63,14 @@
                        
                     </select>
                 </div>
+                <div class="form-group">
+                    <label >Photo</label>
+                    <br>
+                    <img src= "{{asset('images/'.$data->image)}}" height="150px">
+                    <p>{{$data->image}}</p>
+                    <input type="file" class="form-control" id="photo" name="photo">
+                </div>
             </div>
-
             <div class="form-actions">
                 <button type="submit" class="btn btn-info">Submit</button>
                 <a href="{{ route('obat.index') }}" class="btn btn-default">Cancel</a>

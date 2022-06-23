@@ -94,6 +94,8 @@ class TransaksiController extends Controller
     }
 
     public function laporanPembeliTerbanyak(){
+        $this->authorize('check-admin');
+        
         // Menghitung jumlah total semua transaksi tiap pembeli
         // select p.user_id, p.name, p.address, p.telepon, sum(t.total) as totalHarga
         // from transaksis t
@@ -113,6 +115,7 @@ class TransaksiController extends Controller
     }
 
     public function laporanObatTerlaris(){
+        $this->authorize('check-admin');
         //Ambil semua data di masternya -> obat dan transaksi
         $obat = Obat::all();
         $transaksi = Transaksi::all();
@@ -140,6 +143,7 @@ class TransaksiController extends Controller
     }
 
     public function transaksiSemuaPembeli(){
+        $this->authorize('check-admin');
         $transaksi=Transaksi::all();
         return view('laporan.transaksiSemuaPembeli', compact('transaksi'));
     }

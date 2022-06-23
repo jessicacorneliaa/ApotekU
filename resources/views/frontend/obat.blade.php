@@ -50,7 +50,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <p><strong>Price: </strong> Rp. {{ number_format($p->price, 2) }}</p>
+                            <p><strong>Price: </strong> Rp {{ number_format($p->price, 2) }}</p>
                         </td>
                     </tr>
                     <tr>
@@ -60,7 +60,7 @@
                                 @csrf
                                 <div class="row">
                                     <span style="margin:auto">
-                                        <input type="number" name="quantity" value="1" min="1" style="width:50px">
+                                        <input type="number" name="qty" value="1" min="1" style="width:50px">
                                         <button type="submit" class="btn-holder" value="Add To Cart" style="display:inline">Add to cart</button>
                                     </span>
                                 </div>
